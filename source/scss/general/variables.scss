@@ -1,6 +1,8 @@
 $c-light: #ffffff;
 $c-dark: #5f458c;
 $c-purple: #a67ee5;
+$c-blue-dark: #3e72ee;
+$c-blue-light: #a0ceff;
 
 $font: "Proxima Nova", "Arial", sans-serif;
 $font-alt: "Radical",  "Arial", sans-serif;
@@ -19,3 +21,12 @@ $retina-dpi: 144dpi;
 $retina-dppx: 1.5dppx;
 
 $index: 1.38871;
+
+$animation-time-1: 0.15s;
+$animation-time-2: 0.3s;
+$animation-time-3: 0.5s;
+
+:root {
+  --menuLinkColor: #a67ee5;
+  --socialBlockTogglerColor: #5f458c;
+}

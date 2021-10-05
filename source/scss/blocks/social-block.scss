@@ -15,7 +15,7 @@
   display: block;
   width: 4rem;
   height: 4rem;
-  color: $c-dark;
+  color: var(--socialBlockTogglerColor);
   border-radius: 50%;
 
   @media (max-width: $tablet) and (orientation: portrait) {
@@ -35,6 +35,7 @@
     background-color: $c-light;
     border: 2px solid $c-light;
     z-index: -1;
+    transition: all $animation-time-2 ease;
   }
 
   svg {
@@ -44,22 +45,44 @@
     height: 2.2rem;
   }
 
-  &:hover,
   .social-block--active & {
-    color: $c-purple;
+    color: $c-light;
+    transition: color $animation-time-2 ease;
 
     &::before {
+      background-color: var(--menuLinkColor);
+      border: 2px solid var(--menuLinkColor);
+      width: 100%;
+      height: 100%;
+    }
+
+    &:hover,
+    &:focus:hover {
+      color: var(--menuLinkColor);
+    }
+
+    &:focus {
+      color: $c-light;
+    }
+  }
+
+  &:hover {
+    color: var(--menuLinkColor);
+
+    &::before {
+      background-color: $c-light;
+      border: 2px solid $c-light;
       width: 112.5%;
       height: 112.5%;
     }
   }
 
   &:focus {
-    color: $c-purple;
+    color: var(--menuLinkColor);
     outline: none;
 
     &::before {
-      border-color: $c-purple;
+      border-color: var(--menuLinkColor);
     }
 
     & + .social-block__list {
@@ -75,8 +98,8 @@
     &::before {
       width: 100%;
       height: 100%;
-      background-color: $c-purple;
-      border-color: $c-purple;
+      background-color: var(--menuLinkColor);
+      border-color: var(--menuLinkColor);
     }
   }
 }
@@ -135,11 +158,20 @@
   &:focus-within {
     opacity: 1;
     pointer-events: auto;
+
+    .social-block__link {
+      opacity: inherit;
+    }
   }
 
   .social-block--active & {
     opacity: 1;
     pointer-events: auto;
+
+    .social-block__link {
+      opacity: inherit;
+      transform: translateY(0);
+    }
   }
 
   li {
@@ -158,6 +190,14 @@
       margin: 0 1.25rem;
     }
   }
+
+  @for $i from 1 through 3 {
+    li:nth-of-type(#{$i}) {
+      .social-block__link {
+        transition: transform $animation-time-3 ease calc(#{$animation-time-1} * #{$i} - #{$animation-time-1}), opacity $animation-time-3 ease calc(#{$animation-time-1} * #{$i} - #{$animation-time-1}), color 0.2s ease;
+      }
+    }
+  }
 }
 
 .social-block__link {
@@ -168,6 +208,8 @@
   color: $c-light;
   border: 2px solid transparent;
   border-radius: 50%;
+  opacity: 0;
+  transform: translateY(0.7rem);
 
   @media (min-width: $stop-scaling) {
     width: 40px;
@@ -177,29 +219,63 @@
   @media (max-width: $tablet) and (orientation: portrait) {
     color: $c-light;
     background-color: $c-dark;
+    opacity: inherit;
+    transform: none;
   }
 
   @media (max-width: $mobile) and (orientation: landscape) {
     color: $c-light;
     background-color: $c-dark;
+    opacity: inherit;
+    transform: none;
   }
 
   &:hover {
-    color: $c-purple;
+    color: var(--menuLinkColor);
+
+    @media (max-width: $tablet) and (orientation: portrait) {
+      color: $c-purple;
+    }
+
+    @media (max-width: $mobile) and (orientation: landscape) {
+      color: $c-purple;
+    }
   }
 
   &:focus {
-    color: $c-purple;
+    color: var(--menuLinkColor);
     background-color: $c-light;
-    border-color: $c-purple;
+    border-color: var(--menuLinkColor);
     outline: none;
+
+    @media (max-width: $tablet) and (orientation: portrait) {
+      color: $c-purple;
+      border-color: $c-purple;
+    }
+
+    @media (max-width: $mobile) and (orientation: landscape) {
+      color: $c-purple;
+      border-color: $c-purple;
+    }
   }
 
   &:active,
   &:active:focus {
-    color: $c-purple;
+    color: var(--menuLinkColor);
     background-color: $c-light;
     border-color: $c-light;
+
+    @media (max-width: $tablet) and (orientation: portrait) {
+      color: $c-purple;
+      background-color: $c-light;
+      border-color: $c-light;
+    }
+
+    @media (max-width: $mobile) and (orientation: landscape) {
+      color: $c-purple;
+      background-color: $c-light;
+      border-color: $c-light;
+    }
   }
 
   svg {
