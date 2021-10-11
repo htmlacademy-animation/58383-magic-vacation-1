@@ -1,0 +1,36 @@
+.page-loading {
+  .page-header__logo {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .page-header__menu {
+    opacity: 1;
+
+    ul li a.active {
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+
+  .social-block__toggler {
+    visibility: visible;
+
+    &::before {
+      animation: $animation-time-2 socialBlockTogglerSize $functionVisible 0.4s backwards;
+    }
+
+    svg {
+      opacity: 1;
+    }
+  }
+
+  .page-header__toggler {
+    opacity: 1;
+  }
+
+  .screen__footer {
+    transform: translateY(0);
+  }
+}

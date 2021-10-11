@@ -35,6 +35,9 @@
   padding: 1rem 0;
   width: 10rem;
   color: $c-light;
+  opacity: 0;
+  transform: translateX(-1rem);
+  transition: transform 0.25s $functionVisible $animation-time-1, opacity 0.25s $functionVisible $animation-time-1;
 
   @media (min-width: $stop-scaling) {
     top: -5px;
@@ -81,6 +84,8 @@
   background-color: $c-light;
   border-radius: 50%;
   z-index: 1;
+  opacity: 0;
+  transition: opacity $animation-time-2 $functionVisible 0.2s;
 
   @media (max-width: $tablet) and (orientation: portrait) {
     display: block;
@@ -177,6 +182,8 @@
   font-size: 1.2rem;
   line-height: 1.0418;
   color: $c-light;
+  opacity: 0;
+  transition: opacity $animation-time-2 $functionVisible 0.2s;
 
   @media (min-width: $stop-scaling) {
     font-size: 12px;
@@ -274,7 +281,9 @@
 
     &.active {
       &::after {
-        width: 100%;
+        left: 0;
+        width: 0;
+        transition: width $animation-time-2 $functionVisible 0.2s;
       }
     }
 
