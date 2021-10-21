@@ -3,6 +3,7 @@ import throttle from 'lodash/throttle';
 export default class FullPageScroll {
   constructor() {
     this.THROTTLE_TIMEOUT = 1000;
+    this.SCREEN_ANIMATION_DELAY_TIMEOUT = 300;
     this.scrollFlag = true;
     this.timeout = null;
 
@@ -52,11 +53,39 @@ export default class FullPageScroll {
   }
 
   changeVisibilityDisplay() {
+    const screenOverlay = document.querySelector(`.screen__overlay`);
+    let activeElement = this.screenElements[this.activeScreen];
+    let beforeActiveElement = this.screenElements[0];
+
     this.screenElements.forEach((screen) => {
-      screen.classList.add(`screen--hidden`);
-      screen.classList.remove(`active`);
+      if (screen.classList.contains(`active`)) {
+        beforeActiveElement = screen;
+      }
+
+      if (beforeActiveElement.classList.contains(`screen--story`) && activeElement.classList.contains(`screen--prizes`)) {
+        setTimeout(() => {
+          screen.classList.add(`screen--hidden`);
+          screen.classList.remove(`active`);
+        }, this.SCREEN_ANIMATION_DELAY_TIMEOUT);
+        screenOverlay.classList.add(`active`);
+        /* removes screen screenOverlay to have access to the footer in the mobile version on the prizes screen */
+        setTimeout(() => {
+          screenOverlay.classList.remove(`active`);
+        }, this.SCREEN_ANIMATION_DELAY_TIMEOUT);
+      } else {
+        screen.classList.add(`screen--hidden`);
+        screen.classList.remove(`active`);
+      }
     });
-    this.screenElements[this.activeScreen].classList.remove(`screen--hidden`);
+
+    if (beforeActiveElement.classList.contains(`screen--story`) && activeElement.classList.contains(`screen--prizes`)) {
+      setTimeout(() => {
+        this.screenElements[this.activeScreen].classList.remove(`screen--hidden`);
+      }, this.SCREEN_ANIMATION_DELAY_TIMEOUT);
+    } else {
+      this.screenElements[this.activeScreen].classList.remove(`screen--hidden`);
+    }
+
     setTimeout(() => {
       this.screenElements[this.activeScreen].classList.add(`active`);
     }, 100);
