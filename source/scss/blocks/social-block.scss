@@ -36,7 +36,11 @@
     background-color: $c-light;
     border: 2px solid $c-light;
     z-index: -1;
-    transition: all $animation-time-2 ease;
+    transform: translate(-50%, -50%) scale(0);
+    /* stylelint-disable */
+    transition: all $animation-time-2 ease,
+                transform $animation-time-2 cubic-bezier(.25,.1,.39,1.55) 0.4s;
+    /* stylelint-enable */
   }
 
   svg {
@@ -194,13 +198,17 @@
     }
   }
 
+   /* stylelint-disable */
   @for $i from 1 through 3 {
     li:nth-of-type(#{$i}) {
       .social-block__link {
-        transition: transform $animation-time-3 ease calc(#{$animation-time-1} * #{$i} - #{$animation-time-1}), opacity $animation-time-3 ease calc(#{$animation-time-1} * #{$i} - #{$animation-time-1}), color 0.2s ease;
+        transition: transform $animation-time-3 ease calc(#{$animation-time-1} * #{$i} - #{$animation-time-1}),
+                    opacity $animation-time-3 ease calc(#{$animation-time-1} * #{$i} - #{$animation-time-1}),
+                    color 0.2s ease;
       }
     }
   }
+  /* stylelint-enable */
 }
 
 .social-block__link {

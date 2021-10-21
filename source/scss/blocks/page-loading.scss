@@ -18,7 +18,7 @@
     visibility: visible;
 
     &::before {
-      animation: $animation-time-2 socialBlockTogglerSize $functionVisible 0.4s backwards;
+      transform: translate(-50%, -50%) scale(1);
     }
 
     svg {

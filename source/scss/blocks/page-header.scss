@@ -37,7 +37,10 @@
   color: $c-light;
   opacity: 0;
   transform: translateX(-1rem);
-  transition: transform 0.25s $functionVisible $animation-time-1, opacity 0.25s $functionVisible $animation-time-1;
+  /* stylelint-disable */
+  transition: transform 0.25s $functionVisible $animation-time-1,
+              opacity 0.25s $functionVisible $animation-time-1;
+  /* stylelint-enable */
 
   @media (min-width: $stop-scaling) {
     top: -5px;
