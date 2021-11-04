@@ -186,3 +186,33 @@
 .chat__footer {
   margin-top: auto;
 }
+
+.chat__footer--game {
+  .form__field-wrapper::after {
+    @media (orientation: portrait) {
+      visibility: hidden;
+      transition: transform $animation-time-2 ease-out $animation-time-3,
+        color 0.2s ease $animation-time-3,
+        visibility 0s ease $animation-time-3;
+    }
+
+    @media (max-width: $mobile) and (orientation: landscape) {
+      visibility: hidden;
+      transition: transform $animation-time-2 ease-out $animation-time-3,
+        color 0.2s ease $animation-time-3,
+        visibility 0s ease $animation-time-3;
+    }
+  }
+
+  .form__button {
+    @media (orientation: portrait) {
+      --baseWidth: 4rem;
+      animation: width $animation-time-2 ease reverse both;
+    }
+
+    @media (max-width: $mobile) and (orientation: landscape) {
+      --baseWidth: 4rem;
+      animation: width $animation-time-2 ease reverse both;
+    }
+  }
+}

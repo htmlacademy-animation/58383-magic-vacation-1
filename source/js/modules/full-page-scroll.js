@@ -54,8 +54,15 @@ export default class FullPageScroll {
 
   changeVisibilityDisplay() {
     const screenOverlay = document.querySelector(`.screen__overlay`);
+    const formButton = document.querySelector(`.form__button`);
+    const chatFooter = document.querySelector(`.chat__footer`);
     let activeElement = this.screenElements[this.activeScreen];
     let beforeActiveElement = this.screenElements[0];
+
+    let changeScreenVisibility = function (item) {
+      item.classList.add(`screen--hidden`);
+      item.classList.remove(`active`);
+    };
 
     this.screenElements.forEach((screen) => {
       if (screen.classList.contains(`active`)) {
@@ -64,17 +71,27 @@ export default class FullPageScroll {
 
       if (beforeActiveElement.classList.contains(`screen--story`) && activeElement.classList.contains(`screen--prizes`)) {
         setTimeout(() => {
-          screen.classList.add(`screen--hidden`);
-          screen.classList.remove(`active`);
+          changeScreenVisibility(screen);
         }, this.SCREEN_ANIMATION_DELAY_TIMEOUT);
         screenOverlay.classList.add(`active`);
+        beforeActiveElement.classList.add(`screen--hide-content`);
+
         /* removes screen screenOverlay to have access to the footer in the mobile version on the prizes screen */
         setTimeout(() => {
           screenOverlay.classList.remove(`active`);
+          beforeActiveElement.classList.remove(`screen--hide-content`);
         }, this.SCREEN_ANIMATION_DELAY_TIMEOUT);
+      } else if (beforeActiveElement.classList.contains(`screen--rules`) && activeElement.classList.contains(`screen--game`)) {
+        changeScreenVisibility(screen);
+        formButton.classList.add(`form__button-text`);
+        chatFooter.classList.add(`chat__footer--game`);
+        setTimeout(() => {
+          formButton.classList.remove(`form__button-text`);
+          chatFooter.classList.remove(`chat__footer--game`);
+        }, 500);
+
       } else {
-        screen.classList.add(`screen--hidden`);
-        screen.classList.remove(`active`);
+        changeScreenVisibility(screen);
       }
     });
 

@@ -1,0 +1,55 @@
+@keyframes width {
+  0% {
+    width: var(--baseWidth);
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes markerSizeRulesItem {
+  0% {
+    transform: scale3d(0, 0, 0);
+  }
+
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes markerTextRulesItem {
+  0% {
+    color: transparent;
+  }
+
+  15% {
+    color: transparent;
+  }
+
+  100% {
+    color: $c-light;
+  }
+}
+
+@keyframes textRulesItem {
+  0% {
+    opacity: 0;
+    transform: translate3d(2.5rem, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}

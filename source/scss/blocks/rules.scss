@@ -54,6 +54,9 @@
 }
 
 .rules__lead {
+  --textVisibilityDelay: 0.2s;
+
+  @include textVisibility;
   margin-left: 5.8rem;
   max-width: 96rem;
   text-transform: uppercase;
@@ -90,21 +93,22 @@
 .rules__list {
   @include list-reset;
   counter-reset: li;
-  column-count: 2;
-  column-gap: 9.6rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 0 9.6rem;
   margin: auto;
   padding-top: 7rem;
   max-width: 69.6rem;
 
   @media (min-width: $stop-scaling) {
-    column-gap: 96px;
+    grid-gap: 0 96px;
     padding-top: 70px;
     max-width: 696px;
   }
 
   @media (max-width: $tablet) and (orientation: portrait) {
-    column-count: auto;
-    column-gap: 0;
+    display: block;
     padding: 0 2.5rem;
   }
 
@@ -113,7 +117,7 @@
   }
 
   @media (max-width: $mobile) and (orientation: landscape) {
-    column-gap: 4rem;
+    grid-gap: 0 4rem;
   }
 }
 
@@ -122,7 +126,13 @@
   margin: 0 0 6.2rem;
   padding-top: 0.6rem;
   padding-left: 6.5rem;
-  break-inside: avoid;
+
+  &:nth-of-type(2) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
 
   @media (min-width: $stop-scaling) {
     margin: 0 0 62px;
@@ -144,34 +154,51 @@
     font-size: 1.2rem;
   }
 
-  &::before {
-    content: counter(li);
-    counter-increment: li;
+  &::before,
+  &::after {
     position: absolute;
     top: 0;
     left: 0;
     width: 4.5rem;
     height: 4.5rem;
-    font-family: $font-alt;
-    font-weight: 400;
-    font-size: 2.4rem;
-    background-color: $c-purple;
-    border-radius: 50%;
-    line-height: 5rem;
-    text-align: center;
 
     @media (max-width: $tablet) and (orientation: portrait) {
       top: 1rem;
       width: 2.5rem;
       height: 2.5rem;
-      line-height: 3rem;
-      font-size: 1.4rem;
     }
 
     @media (max-width: $mobile) and (orientation: landscape) {
       top: 0.6rem;
       width: 2.5rem;
       height: 2.5rem;
+    }
+  }
+
+  &::before {
+    content: "";
+    background-color: $c-purple;
+    border-radius: 50%;
+    transform: scale3d(0, 0, 0);
+    animation: markerSizeRulesItem $animation-time-2 cubic-bezier(0.25, 0.1, 0, 1.82) both;
+  }
+
+  &::after {
+    content: counter(li);
+    counter-increment: li;
+    font-family: $font-alt;
+    font-weight: 400;
+    font-size: 2.4rem;
+    line-height: 5rem;
+    text-align: center;
+    animation: markerTextRulesItem $animation-time-2 ease both;
+
+    @media (max-width: $tablet) and (orientation: portrait) {
+      line-height: 3rem;
+      font-size: 1.4rem;
+    }
+
+    @media (max-width: $mobile) and (orientation: landscape) {
       line-height: 3rem;
       font-size: 1.4rem;
     }
@@ -179,27 +206,71 @@
 
   p {
     margin: 0;
+    animation: textRulesItem 0.4s ease-out both;
 
     @media (max-width: $tablet) and (orientation: portrait) {
       min-height: calc(1.4rem * 2.2);
     }
   }
+
+  @for $i from 1 through 4 {
+    &:nth-of-type(#{$i}) {
+      &::before,
+      &::after {
+        animation-delay: 0.2s * ($i - 1) + $rulesVisibilityDelay;
+      }
+
+      p {
+        animation-delay: 0.2s * $i + $rulesVisibilityDelay;
+      }
+    }
+  }
 }
 
 .rules__link {
+  --baseWidth: 6rem; /* .btn line-height + padding */
   position: absolute;
   bottom: 6rem;
   right: 5.6rem;
 
+  &::before {
+    width: var(--baseWidth);
+    transform: translate3d(-50%, -50%, 0) scale3d(1, 1, 1);
+    transition: transform 0.2s ease;
+    animation: width 0.4s ease-out both 1.6s,
+      opacity 0.4s ease-out both 1.6s; /* 0.8s + $rulesVisibilityDelay */
+  }
+
+  span {
+    transition: color 0.2s ease;
+    animation: opacity 2s ease both 1.8s; /* 1s + $rulesVisibilityDelay */
+  }
+
+  &:hover {
+    --baseWidth: 100%;
+
+    &::before {
+      transform: translate3d(-50%, -50%, 0) scale3d(1.1, 1, 1);
+    }
+  }
+
   @media (min-width: $stop-scaling) {
+    --baseWidth: 2rem + 30px;
     bottom: 60px;
     right: 56px;
   }
 
   @media (max-width: $tablet) and (orientation: portrait) {
+    --baseWidth: 4rem;
     left: 0;
     right: 0;
     bottom: 4rem;
+
+    &:hover {
+      &::before {
+        transform: translate3d(-50%, -50%, 0) scale3d(1.03, 1, 1);
+      }
+    }
   }
 
   @media (max-width: $tablet) and (orientation: landscape) {
@@ -207,7 +278,14 @@
   }
 
   @media (max-width: $mobile) and (orientation: landscape) {
+    --baseWidth: 4rem;
     bottom: 2rem;
     right: 1.5rem;
+
+    &:hover {
+      &::before {
+        transform: translate3d(-50%, -50%, 0) scale3d(1.03, 1, 1);
+      }
+    }
   }
 }
