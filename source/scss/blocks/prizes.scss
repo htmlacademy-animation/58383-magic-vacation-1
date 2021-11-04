@@ -52,6 +52,9 @@
 }
 
 .prizes__lead {
+  --textVisibilityDelay: 0.2s;
+
+  @include textVisibility;
   margin-left: 5.8rem;
   margin-bottom: -5.6rem;
   max-width: 34rem;

@@ -56,5 +56,12 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, 0);
+}
+
+@mixin textVisibility {
+  opacity: 0;
+  transform: translate3d(0, 2rem, 0);
+  transition: transform $animation-time-3 ease-out var(--textVisibilityDelay),
+    opacity $animation-time-3 ease-out var(--textVisibilityDelay);
 }

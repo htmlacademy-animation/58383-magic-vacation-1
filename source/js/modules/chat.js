@@ -15,6 +15,7 @@ export default () => {
 
     let getAnswer = function () {
       setTimeout(function () {
+        messageField.blur();
         let answerEl = document.createElement(`li`);
         let placeholder = document.createElement(`div`);
         let textEl = document.createElement(`p`);
@@ -82,4 +83,16 @@ export default () => {
     postQuestion();
 
   });
+
+  messageField.oninput = function () {
+    if (messageField.value) {
+      messageField.style.backgroundColor = `#ffffff`;
+    } else {
+      messageField.style.backgroundColor = `transparent`;
+    }
+  };
+
+  messageField.blur = function () {
+    messageField.style.backgroundColor = `transparent`;
+  };
 };

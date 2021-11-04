@@ -9,7 +9,7 @@ import form from './modules/form.js';
 import social from './modules/social.js';
 import pageHeader from './modules/page-header.js';
 import pageLoading from './modules/page-loading.js';
-import FullPageScroll from './modules/full-page-scroll';
+import FullPageScroll from './modules/full-page-scroll.js';
 
 // init modules
 mobileHeight();

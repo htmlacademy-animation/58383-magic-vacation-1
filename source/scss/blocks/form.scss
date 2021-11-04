@@ -2,6 +2,10 @@
   position: relative;
   display: flex;
   align-items: center;
+
+  &--game {
+    justify-content: flex-end;
+  }
 }
 
 .form__label {
@@ -29,40 +33,9 @@
   }
 }
 
-.form__field-wrapper {
-  position: relative;
-  margin-right: 3rem;
-  height: 6rem;
-  width: calc(100% - 21rem);
-  border-radius: 3rem;
-  overflow: hidden;
-
-  @media (min-width: $stop-scaling) {
-    margin-right: 30px;
-    height: 60px;
-    width: calc(100% - 210px);
-    border-radius: 30px;
-  }
-
-  @media (orientation: portrait) {
-    margin-right: 1rem;
-    height: 4rem;
-    width: calc(100% - 5rem);
-  }
-
-  @media (max-width: $tablet) and (orientation: landscape) {
-    width: calc(100% - 9rem);
-  }
-
-  @media (max-width: $mobile) and (orientation: landscape) {
-    margin-right: 1rem;
-    height: 4rem;
-    width: calc(100% - 5rem);
-  }
-}
-
 .form__field {
   position: absolute;
+  z-index: 2;
   padding: 0 5.6rem;
   height: 100%;
   width: 100%;
@@ -75,11 +48,14 @@
   border: 0;
   border-radius: 3rem;
   outline: none;
-  transform: translateX(100%);
-  transition: transform $animation-time-2 ease-out;
+  background-color: transparent;
 
   &:focus {
     border: 1px solid $c-purple;
+  }
+
+  &::-ms-clear {
+    display: none;
   }
 
   @media (min-width: $stop-scaling) {
@@ -99,30 +75,80 @@
   }
 }
 
-.form__button {
-  flex-grow: 1;
+.form__field-wrapper {
+  position: relative;
+  margin-right: 3rem;
+  height: 6rem;
+  width: calc(100% - 21rem);
+  border-radius: 3rem;
+  overflow: hidden;
+
+  &::after {
+    @extend .form__field;
+    content: "Задай вопрос";
+    z-index: 1;
+    line-height: 6rem;
+    color: transparent;
+    background-color: $c-light;
+    transform: translate3d(calc(100% - 6rem), 0, 0);
+    transition: transform $animation-time-2 ease-out,
+      color 0.2s ease $animation-time-2;
+  }
+
+  @media (min-width: $stop-scaling) {
+    margin-right: 30px;
+    height: 60px;
+    width: calc(100% - 210px);
+    border-radius: 30px;
+
+    &::after {
+      line-height: 60px;
+      transform: translate3d(calc(100% - 60px), 0, 0);
+    }
+  }
 
   @media (orientation: portrait) {
-    position: relative;
-    flex: none;
-    padding: 0;
-    width: 4rem;
+    margin-right: 1rem;
     height: 4rem;
-    font-size: 0;
+    width: calc(100% - 5rem);
+
+    &::after {
+      line-height: 4rem;
+      transform: translate3d(calc(100% - 4rem), 0, 0);
+    }
   }
 
   @media (max-width: $tablet) and (orientation: landscape) {
-    position: relative;
-    flex: none;
-    padding: 0;
-    width: 6rem;
-    height: 6rem;
-    font-size: 0;
+    width: calc(100% - 9rem);
   }
 
   @media (max-width: $mobile) and (orientation: landscape) {
+    margin-right: 1rem;
+    height: 4rem;
+    width: calc(100% - 5rem);
+
+    &::after {
+      line-height: 4rem;
+      transform: translate3d(calc(100% - 4rem), 0, 0);
+    }
+  }
+}
+
+.form__button {
+  flex-grow: 1;
+
+  @media (max-width: $tablet) and (orientation: portrait) {
+    position: relative;
+    flex: none;
+    padding: 0;
     width: 4rem;
     height: 4rem;
+    font-size: 0;
+  }
+
+  span {
+    opacity: 0;
+    transition: opacity 0.2s ease 0.4s;
   }
 
   svg {
@@ -136,13 +162,24 @@
       height: 18px;
     }
 
-    @media (orientation: portrait) {
+    @media (max-width: $tablet) and (orientation: portrait) {
       display: block;
+      opacity: 0;
+      transition: opacity 0.2s ease $animation-time-2;
     }
+  }
+}
 
-    @media (max-width: $tablet) and (orientation: landscape) {
-      display: block;
-    }
+.form__button-text {
+  &::after {
+    @extend .btn;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    content: "Погнали!";
+    opacity: 1;
+    transition: opacity $animation-time-1 ease;
   }
 }
 

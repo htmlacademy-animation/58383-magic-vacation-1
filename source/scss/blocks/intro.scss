@@ -87,15 +87,15 @@
 }
 
 .intro__message {
+  --textVisibilityDelay: 0s;
+
+  @include textVisibility;
   flex: none;
   width: 50.9rem;
   max-width: 50%;
   text-transform: uppercase;
   font-size: 2.4rem;
   line-height: 1.27;
-  opacity: 0;
-  transform: translateY(2rem);
-  transition: transform $animation-time-3 ease-out, opacity $animation-time-3 ease-out;
 
   @media (min-width: $stop-scaling) {
     width: 509px;

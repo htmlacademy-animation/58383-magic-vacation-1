@@ -36,11 +36,9 @@
     background-color: $c-light;
     border: 2px solid $c-light;
     z-index: -1;
-    transform: translate(-50%, -50%) scale(0);
-    /* stylelint-disable */
+    transform: translate3d(-50%, -50%, 0) scale3d(0, 0, 0);
     transition: all $animation-time-2 ease,
-                transform $animation-time-2 cubic-bezier(.25,.1,.39,1.55) 0.4s;
-    /* stylelint-enable */
+      transform $animation-time-2 cubic-bezier(0.25, 0.1, 0.39, 1.55) 0.4s;
   }
 
   svg {
@@ -68,7 +66,8 @@
       color: var(--menuLinkColor);
     }
 
-    &:focus {
+    &:focus,
+    &:active:hover {
       color: $c-light;
     }
   }
@@ -198,17 +197,16 @@
     }
   }
 
-   /* stylelint-disable */
   @for $i from 1 through 3 {
     li:nth-of-type(#{$i}) {
       .social-block__link {
-        transition: transform $animation-time-3 ease calc(#{$animation-time-1} * #{$i} - #{$animation-time-1}),
-                    opacity $animation-time-3 ease calc(#{$animation-time-1} * #{$i} - #{$animation-time-1}),
-                    color 0.2s ease;
+        transition: transform $animation-time-3 ease,
+          opacity $animation-time-3 ease,
+          color 0.2s ease;
+        transition-delay: $animation-time-1 * $i - $animation-time-1;
       }
     }
   }
-  /* stylelint-enable */
 }
 
 .social-block__link {
